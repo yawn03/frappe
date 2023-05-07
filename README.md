@@ -1,3 +1,3 @@
 - Install dependencies using ``pip install -r requirements.txt``
-- Edit .env file to have Discord application key where specified
+- Edit .env file to have Discord application key and guild id where specified
 - Run main.py to run bot
