@@ -20,12 +20,12 @@ classlist = scraper.get_class_list(update=False)
 async def on_ready():
     print(classlist)
     print(f'Logged on as {client.user}!')
-    await tree.sync(guild=discord.Object(id=831589565096788088))
+    await tree.sync(guild=discord.Object(id=env_vars["TEST_GUILD_ID"]))
     print("Ready!")
 
 
 # https://stackoverflow.com/questions/71165431/how-do-i-make-a-working-slash-command-in-discord-py
-@tree.command(name="addclass", description="add a role for a class", guild=discord.Object(id=831589565096788088))
+@tree.command(name="addclass", description="add a role for a class", guild=discord.Object(id=env_vars["TEST_GUILD_ID"]))
 # Add the guild ids in which the slash command will appear. If it should be in all, remove the argument,
 # but note that it will take some time (up to an hour) to register the command if it's for all guilds.
 async def add_class(interaction: discord.Interaction, id: str):
@@ -59,7 +59,7 @@ async def add_class(interaction: discord.Interaction, id: str):
     await interaction.response.send_message("Failed ;_;. ")
 
 
-@tree.command(name="removeclass", description="remove a role for a class", guild=discord.Object(id=831589565096788088))
+@tree.command(name="removeclass", description="remove a role for a class", guild=discord.Object(id=env_vars["TEST_GUILD_ID"]))
 async def remove_class(interaction: discord.Interaction, id: str):
     user = interaction.user
     # if the role already exists, then give it to the user
