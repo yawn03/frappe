@@ -25,10 +25,7 @@ async def on_ready():
     print("Ready!")
 
 
-async def school_autocomplete(
-        interaction: discord.Interaction,
-        current: str,
-) -> List[app_commands.Choice[str]]:
+async def school_autocomplete(interaction: discord.Interaction, current: str) -> List[app_commands.Choice[str]]:
     schools = ['ECE', 'M']
     return [
         app_commands.Choice(name=school, value=school)
@@ -37,6 +34,7 @@ async def school_autocomplete(
 
 
 # https://stackoverflow.com/questions/71165431/how-do-i-make-a-working-slash-command-in-discord-py
+# noinspection PyUnresolvedReferences
 @tree.command(name="addclass", description="Add a class to your roles", guild=discord.Object(env_vars["GUILD_ID"]))
 @app_commands.autocomplete(school=school_autocomplete)
 # Add the guild ids in which the slash command will appear. If it should be in all, remove the argument,
@@ -72,6 +70,7 @@ async def add_class(interaction: discord.Interaction, school: str, class_id: str
     await interaction.response.send_message("Failed ;_;.", ephemeral=True)
 
 
+# noinspection PyUnresolvedReferences
 @tree.command(name="removeclass", description="Remove a class from your roles",
               guild=discord.Object(env_vars["GUILD_ID"]))
 @app_commands.autocomplete(school=school_autocomplete)
