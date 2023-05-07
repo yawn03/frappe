@@ -14,7 +14,7 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 
-classlist = scraper.get_class_list(update=False)
+classlist = scraper.get_class_list(update=True)
 
 
 @client.event
