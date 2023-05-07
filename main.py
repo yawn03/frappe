@@ -38,12 +38,12 @@ async def add_class(interaction: discord.Interaction, id: str):
     if discord.utils.get(interaction.guild.roles, name=id):
         # if they already have it then we don't really need to do anything...
         if discord.utils.get(user.guild.roles, name=id):
-            await interaction.response.send_message("You already have this role. ")
+            await interaction.response.send_message("You already have this role. ", ephemeral=True)
             return
 
         # assign the role
         await user.add_roles(discord.utils.get(user.guild.roles, name=id))
-        await interaction.response.send_message("Done! ")
+        await interaction.response.send_message("Done! ", ephemeral=True)
         return
 
     # if it doesn't, then create the role and then add the user
@@ -52,11 +52,11 @@ async def add_class(interaction: discord.Interaction, id: str):
         print(user.guild.roles)
         role = await interaction.guild.create_role(name=id)
         await user.add_roles(role)
-        await interaction.response.send_message("Done! ")
+        await interaction.response.send_message("Done! ", ephemeral=True)
         return
 
     # we really shouldn't be here but just in case...
-    await interaction.response.send_message("Failed ;_;. ")
+    await interaction.response.send_message("Failed ;_;. ", ephemeral=True)
 
 
 @tree.command(name="removeclass", description="remove a role for a class", guild=discord.Object(env_vars["GUILD_ID"]))
@@ -68,13 +68,13 @@ async def remove_class(interaction: discord.Interaction, id: str):
         role = discord.utils.get(interaction.guild.roles, name=id)
         if discord.utils.get(user.guild.roles, name=id):
             await user.remove_roles(role)
-            await interaction.response.send_message("Done! ")
+            await interaction.response.send_message("Done! ", ephemeral=True)
             return
 
-        await interaction.response.send_message("You don't have this role. ")
+        await interaction.response.send_message("You don't have this role. ", ephemeral=True)
         return
 
-    await interaction.response.send_message("Failed ;_;. ")
+    await interaction.response.send_message("Failed ;_;. ", ephemeral=True)
 
 
 def check_valid(id: str):
