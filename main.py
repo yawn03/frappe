@@ -32,9 +32,10 @@ async def school_autocomplete(
 ) -> List[app_commands.Choice[str]]:
     schools = ['ECE', 'M']
     return [
-app_commands.Choice(name=school, value=school)
-for school in schools if current.lower() in school.lower()
-]
+        app_commands.Choice(name=school, value=school)
+        for school in schools if current.lower() in school.lower()
+    ]
+
 
 # https://stackoverflow.com/questions/71165431/how-do-i-make-a-working-slash-command-in-discord-py
 @tree.command(name="addclass", description="add a role for a class", guild=discord.Object(env_vars["GUILD_ID"]))
@@ -92,6 +93,7 @@ async def remove_class(interaction: discord.Interaction, school: str, class_id: 
         return
 
     await interaction.response.send_message("Failed ;_;. ", ephemeral=True)
+
 
 def check_valid(id: str):
     return id in classlist
