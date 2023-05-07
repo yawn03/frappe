@@ -75,6 +75,9 @@ async def add_class(interaction: discord.Interaction, school: str, class_id: str
 @tree.command(name="removeclass", description="remove a role for a class", guild=discord.Object(env_vars["GUILD_ID"]))
 @app_commands.autocomplete(school=school_autocomplete)
 async def remove_class(interaction: discord.Interaction, school: str, class_id: str):
+    if not check_valid(id):
+        return
+
     class_full_name = school + " " + class_id
     user = interaction.user
     # if the role already exists, then remove it if they have it
