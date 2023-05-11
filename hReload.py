@@ -2,6 +2,7 @@ import requests
 import subprocess
 import signal
 import time
+from dotenv import dotenv_values
 
 def get_commit_hash(user, repo, br):
     url = f"https://api.github.com/repos/{user}/{repo}/branches/{br}"
@@ -16,23 +17,26 @@ def get_commit_hash(user, repo, br):
         print(f"Failed to retrieve latest commit hash. Code: {response.status_code}")
         return None
 
-
 def startBot():
     pHandle = subprocess.Popen(['python3', 'main.py'], stdout=subprocess.PIPE)
     return pHandle
 
 
-user = "NeoRubylith"
-repo = "frappe"
-branch = "main"
+env_vars = dotenv_values(".env")
+
+
+user = env_vars["STAGING_USER"]
+repo = env_vars["STAGING_REPO"]
+branch = env_vars["STAGING_BRANCH"]
 shaPr = get_commit_hash(user, repo, branch) 
 
 pHandle = startBot()
 
 while (True):
-    # code was broken
+    # this code does not work and i am not sure why rn
+    # could be useful later
     # bot is frozen
-#    if (pHandle.poll() is None):
+#    if (pHandle.poll() is not None):
 #        print("bot dripped too hard, melting")
 #        pHandle.send_signal(signal.SIGTERM)
 #        pHandle.wait()
@@ -49,3 +53,5 @@ while (True):
             pHandle.wait()
             pHandle = startBot()
             shaPr = sha
+        else:
+            print("no new commit D:")
