@@ -21,7 +21,7 @@ classlist = scraper.get_class_list(update=True)
 async def on_ready():
     print(classlist)
     print(f'Logged on as {client.user}!')
-    await tree.sync(guild=discord.Object(env_vars["GUILD_ID"]))
+    await tree.sync()
     print("Ready!")
 
 
@@ -35,7 +35,7 @@ async def school_autocomplete(interaction: discord.Interaction, current: str) ->
 
 # https://stackoverflow.com/questions/71165431/how-do-i-make-a-working-slash-command-in-discord-py
 # noinspection PyUnresolvedReferences
-@tree.command(name="addclass", description="Add a class to your roles", guild=discord.Object(env_vars["GUILD_ID"]))
+@tree.command(name="addclass", description="Add a class to your roles")
 @app_commands.autocomplete(school=school_autocomplete)
 # Add the guild ids in which the slash command will appear. If it should be in all, remove the argument,
 # but note that it will take some time (up to an hour) to register the command if it's for all guilds.
@@ -57,7 +57,7 @@ async def add_class(interaction: discord.Interaction, school: str, class_id: str
             return
 
         # assign the role
-        await user.add_roles(discord.utils.get(user.roles, name=class_full_name))
+        await user.add_roles(discord.utils.get(user.guild.roles, name=class_full_name))
         await interaction.response.send_message("Done!", ephemeral=True)
         return
 
@@ -71,8 +71,7 @@ async def add_class(interaction: discord.Interaction, school: str, class_id: str
 
 
 # noinspection PyUnresolvedReferences
-@tree.command(name="removeclass", description="Remove a class from your roles",
-              guild=discord.Object(env_vars["GUILD_ID"]))
+@tree.command(name="removeclass", description="Remove a class from your roles")
 @app_commands.autocomplete(school=school_autocomplete)
 async def remove_class(interaction: discord.Interaction, school: str, class_id: str):
     class_full_name = school + " " + class_id
