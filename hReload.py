@@ -1,3 +1,5 @@
+import os
+
 import requests
 import subprocess
 import signal
@@ -37,6 +39,9 @@ branch = env_vars["STAGING_BRANCH"]
 # Current latest commit
 shaPr = get_commit_hash(user, repo, branch) 
 
+# pull latest commit
+subprocess.call(["git", "pull"], cwd=os.path.abspath(os.curdir))
+
 # Start the bot
 pHandle = startBot()
 
@@ -52,11 +57,18 @@ def check_for_new_commit(scheduler, pHandle, shaPr):
         print(f"new commit on '{branch}': {sha[-4:]}; '{commit[1]}' - reloading bot")
         pHandle.send_signal(signal.SIGTERM)
         pHandle.wait()
+
+        ## Fetch the commit
+
+        subprocess.call(["git", "pull"], shell=True, cwd=os.path.abspath(os.curdir))
+
         pHandle = startBot()
         shaPr = sha
     else:
         print("no new commit D:")
     scheduler.enter(10, 1, check_for_new_commit, (scheduler, pHandle, shaPr,))
+
+
 
 
 # Setup scheduler and schedule the commit check
