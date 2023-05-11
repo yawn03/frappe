@@ -48,6 +48,7 @@ shaPr = get_commit_hash(user, repo, branch, token)
 subprocess.call(["git", "remote", "add", "origin", f"git@github.com:{user}/{repo}"])
 subprocess.call(["git", "fetch", "origin"])
 subprocess.call(["git", "switch", branch])
+subprocess.call(["git", "reset", "--hard"])
 
 # Start the bot
 pHandle = startBot()
@@ -73,7 +74,7 @@ def check_for_new_commit(scheduler, pHandle, shaPr):
         shaPr = sha
     else:
         print("no new commit D:")
-    scheduler.enter(10, 1, check_for_new_commit, (scheduler, pHandle, shaPr,))
+    scheduler.enter(float(env_vars["COMMIT_CHECK_INTERVAL"]), 1, check_for_new_commit, (scheduler, pHandle, shaPr,))
 
 
 
