@@ -6,12 +6,15 @@ from dotenv import dotenv_values
 import sys
 import sched
 
+# Uses the GitHub API to extract the hash of the latest commit on a specific branch
+# Requires STAGING_USER, STAGING_REPO, and STAGING_BRANCH
 def get_commit_hash(user, repo, br):
     url = f"https://api.github.com/repos/{user}/{repo}/branches/{br}"
     headers = {"Accept": "application/vnd.github.v3+json"}
     response = requests.get(url, headers=headers)
 
     if (response.status_code == 200):
+        # Received OK HTTP code
         lHash = response.json()["commit"]["sha"]
         msg = response.json()["commit"]["commit"]["message"]
         return str(lHash)
@@ -19,22 +22,26 @@ def get_commit_hash(user, repo, br):
         print(f"Failed to retrieve latest commit hash. Code: {response.status_code}")
         return None
 
+# Opens a new process with thr same python interpreter for the discord bot
 def startBot():
-    print(sys.executable)
     pHandle = subprocess.Popen(args=["python", "main.py"], executable=sys.executable)
     return pHandle
 
 
 env_vars = dotenv_values(".env")
 
-
 user = env_vars["STAGING_USER"]
 repo = env_vars["STAGING_REPO"]
 branch = env_vars["STAGING_BRANCH"]
+
+# Current latest commit
 shaPr = get_commit_hash(user, repo, branch) 
 
+# Start the bot
 pHandle = startBot()
 
+# Runs every COMMIT_CHECK_INTERVAL seconds and checks if a new commit has been pushed to the STAGING_BRANCH
+# If so, it kills the bot process and restarts it
 def check_for_new_commit(scheduler, pHandle, shaPr):
     print("oh boy! time to check github!")
     scheduler.enter(10,1,check_for_new_commit, (scheduler, pHandle, shaPr,))
@@ -51,11 +58,10 @@ def check_for_new_commit(scheduler, pHandle, shaPr):
         print("no new commit D:")
 
 
+# Setup scheduler and schedule the commit check
 my_scheduler = sched.scheduler(time.time, time.sleep)
 my_scheduler.enter(float(env_vars["COMMIT_CHECK_INTERVAL"]), 1, check_for_new_commit, (my_scheduler, pHandle, shaPr))
-print("running scheduled tasks!")
 my_scheduler.run()
-print("going to sleep now :)")
 
 #while (True):
     # this code does not work and i am not sure why rn
