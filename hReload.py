@@ -3,6 +3,7 @@ import subprocess
 import signal
 import time
 from dotenv import dotenv_values
+import sys
 
 def get_commit_hash(user, repo, br):
     url = f"https://api.github.com/repos/{user}/{repo}/branches/{br}"
@@ -18,7 +19,7 @@ def get_commit_hash(user, repo, br):
         return None
 
 def startBot():
-    pHandle = subprocess.Popen(['python3', 'main.py'], stdout=subprocess.PIPE)
+    pHandle = subprocess.Popen([sys.executable, 'main.py'], stdout=subprocess.PIPE)
     return pHandle
 
 
