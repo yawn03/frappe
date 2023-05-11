@@ -6,14 +6,17 @@ from dotenv import dotenv_values
 
 import scraper
 
+print("main.py starting!")
 env_vars = dotenv_values(".env")
 
 intents = discord.Intents.default()
 intents.message_content = True
 
+print("grabbing client and tree")
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 
+print("grabbing values")
 classlist = scraper.get_class_list(update=True)
 
 
@@ -96,7 +99,7 @@ async def remove_class(interaction: discord.Interaction, school: str, class_id: 
 
 
 @tree.command(name="bonk", description="...bonk!")
-async def add_class(interaction: discord.Interaction, user: discord.Member):
+async def bonk(interaction: discord.Interaction, user: discord.Member):
     e = discord.Embed(
         description=(interaction.user.mention + " bonked " + user.mention))
     e.set_image(url="https://media.tenor.com/zdcbh9URQCsAAAAd/bonk-doge.gif")
@@ -106,5 +109,5 @@ async def add_class(interaction: discord.Interaction, user: discord.Member):
 def check_valid(id: str):
     return id in classlist
 
-
+print("starting bot!")
 client.run(env_vars["APPLICATION_KEY"])

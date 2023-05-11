@@ -19,7 +19,8 @@ def get_commit_hash(user, repo, br):
         return None
 
 def startBot():
-    pHandle = subprocess.Popen([sys.executable, 'main.py'], stdout=subprocess.PIPE)
+    print(sys.executable)
+    pHandle = subprocess.Popen(args=["python", "main.py"], executable=sys.executable)
     return pHandle
 
 
