@@ -45,29 +45,29 @@ async def add_class(interaction: discord.Interaction, school: str, class_id: str
     user = interaction.user
     print(check_valid(class_full_name))
 
+    if not check_valid(class_full_name):
+        await interaction.response.send_message("Please enter a valid class", ephemeral=True)
+        return
+
     # if the role already exists, then give it to the user
     if discord.utils.get(interaction.guild.roles, name=class_full_name):
         # if they already have it then we don't really need to do anything...
-        if discord.utils.get(user.guild.roles, name=class_full_name):
+        if discord.utils.get(user.roles, name=class_full_name):
             await interaction.response.send_message("You already have this role.", ephemeral=True)
             return
 
         # assign the role
-        await user.add_roles(discord.utils.get(user.guild.roles, name=class_full_name))
+        await user.add_roles(discord.utils.get(user.roles, name=class_full_name))
         await interaction.response.send_message("Done!", ephemeral=True)
         return
 
     # if it doesn't, then create the role and then add the user
-    elif check_valid(class_full_name):
-        print(class_full_name)
-        print(user.guild.roles)
-        role = await interaction.guild.create_role(name=class_full_name)
-        await user.add_roles(role)
-        await interaction.response.send_message("Done!", ephemeral=True)
-        return
-
-    # we really shouldn't be here but just in case...
-    await interaction.response.send_message("Failed ;_;.", ephemeral=True)
+    print(class_full_name)
+    print(user.roles)
+    role = await interaction.guild.create_role(name=class_full_name)
+    await user.add_roles(role)
+    await interaction.response.send_message("Done!", ephemeral=True)
+    return
 
 
 # noinspection PyUnresolvedReferences
@@ -85,7 +85,7 @@ async def remove_class(interaction: discord.Interaction, school: str, class_id: 
     # if the role already exists, then remove it if they have it
     if discord.utils.get(interaction.guild.roles, name=class_full_name):
         role = discord.utils.get(interaction.guild.roles, name=class_full_name)
-        if discord.utils.get(user.guild.roles, name=class_full_name):
+        if discord.utils.get(user.roles, name=class_full_name):
             await user.remove_roles(role)
             await interaction.response.send_message("Done!", ephemeral=True)
             return
