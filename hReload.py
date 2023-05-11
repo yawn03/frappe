@@ -67,7 +67,7 @@ def check_for_new_commit(scheduler, pHandle, shaPr):
 
         ## Fetch the commit
 
-        subprocess.call(["git", "pull"], shell=True, cwd=os.path.abspath(os.curdir))
+        subprocess.call(["git", "pull"])
 
         pHandle = startBot()
         shaPr = sha
