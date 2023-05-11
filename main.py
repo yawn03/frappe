@@ -102,8 +102,8 @@ async def remove_class(interaction: discord.Interaction, school: str, class_id: 
     await interaction.response.send_message("Failed ;_;.", ephemeral=True)
 
 
-@tree.command(name="donk", description="...bonk!")
-async def donk(interaction: discord.Interaction, user: discord.Member):
+@tree.command(name="bonk", description="...bonk!")
+async def bonk(interaction: discord.Interaction, user: discord.Member):
     e = discord.Embed(description=(interaction.user.mention + " bonked " + user.mention))
     e.set_image(url="https://media.tenor.com/zdcbh9URQCsAAAAd/bonk-doge.gif")
     await interaction.response.send_message(embed=e)
