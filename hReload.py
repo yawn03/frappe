@@ -12,7 +12,9 @@ import sched
 # Requires STAGING_USER, STAGING_REPO, and STAGING_BRANCH
 def get_commit_hash(user, repo, br):
     url = f"https://api.github.com/repos/{user}/{repo}/branches/{br}"
-    headers = {"Accept": "application/vnd.github.v3+json"}
+    headers = {"Accept": "application/vnd.github.v3+json",
+               "User-Agent": "Frappe",
+               "Authorization": env_vars["PERSONAL_GITHUB_TOKEN"]}
     response = requests.get(url, headers=headers)
 
     if (response.status_code == 200):
@@ -54,7 +56,7 @@ def check_for_new_commit(scheduler, pHandle, shaPr):
     sha = commit
     # new commit
     if (shaPr != sha):
-        print(f"new commit on '{branch}': {sha[-4:]}; '{commit[1]}' - reloading bot")
+        print(f"new commit on {branch}: {commit[1]} - reloading bot")
         pHandle.send_signal(signal.SIGTERM)
         pHandle.wait()
 
