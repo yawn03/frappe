@@ -109,6 +109,12 @@ async def bonk(interaction: discord.Interaction, user: discord.Member):
     await interaction.response.send_message(embed=e)
 
 
+@tree.command(name="donk", description="...bonk!")
+async def donk(interaction: discord.Interaction, user: discord.Member):
+    e = discord.Embed(description=(interaction.user.mention + " bonked " + user.mention))
+    e.set_image(url="https://media.tenor.com/zdcbh9URQCsAAAAd/bonk-doge.gif")
+    await interaction.response.send_message(embed=e)
+
 
 def check_valid(id: str):
     return id in classlist
