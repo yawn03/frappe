@@ -45,7 +45,9 @@ token = env_vars["PERSONAL_GITHUB_TOKEN"]
 shaPr = get_commit_hash(user, repo, branch, token)
 
 # pull latest commit
-subprocess.call(["git", "pull"], cwd=os.path.abspath(os.curdir))
+subprocess.call(["git", "remote", "add", "origin", f"git@github.com:{user}/{repo}"])
+subprocess.call(["git", "fetch", "origin"])
+subprocess.call(["git", "switch", branch])
 
 # Start the bot
 pHandle = startBot()
