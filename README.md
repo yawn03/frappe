@@ -9,5 +9,5 @@
     STAGING_BRANC=\\BRANCH YOU WOULD LIKE TO CHECK FOR HOT RELOADING\\
 ```
   
-- Run with hot reloading: `hReload.py`(make sure to edit repo details in the source code for now)
+- Run with hot reloading: `hReload.py`(make sure to edit `.env` file :D)
 - Run normally: `main.py`
