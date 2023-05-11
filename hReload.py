@@ -44,7 +44,7 @@ pHandle = startBot()
 # If so, it kills the bot process and restarts it
 def check_for_new_commit(scheduler, pHandle, shaPr):
     print("oh boy! time to check github!")
-    scheduler.enter(10,1,check_for_new_commit, (scheduler, pHandle, shaPr,))
+
     commit = get_commit_hash(user, repo, branch)
     sha = commit
     # new commit
@@ -56,6 +56,7 @@ def check_for_new_commit(scheduler, pHandle, shaPr):
         shaPr = sha
     else:
         print("no new commit D:")
+    scheduler.enter(10, 1, check_for_new_commit, (scheduler, pHandle, shaPr,))
 
 
 # Setup scheduler and schedule the commit check
