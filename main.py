@@ -78,6 +78,7 @@ async def remove_class(interaction: discord.Interaction, school: str, class_id: 
     class_full_name = school + " " + class_id
 
     if not check_valid(class_full_name):
+        await interaction.response.send_message("Please enter a valid class", ephemeral=True)
         return
 
     user = interaction.user
