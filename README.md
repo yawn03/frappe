@@ -6,4 +6,5 @@
     GUILD_ID=\\ID OF A TEST GUILD FOR INSTANT SLASH COMMANDS\\
   ```
   
-- Run main.py
+- Run with hot reloading: `hReload.py`(make sure to edit repo details in the source code for now
+- Run normally: `main.py`
