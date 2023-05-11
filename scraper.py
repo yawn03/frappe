@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 
 
 def get_class_list(update=False) -> list:
+    print("scrapper start!")
     if not update:
         return ['ECE 302', 'ECE 302H', 'ECE 306', 'ECE 306H', 'ECE 307E', 'ECE 108S', 'ECE 109K', 'ECE 209K',
                 'ECE 309K', 'ECE 409K', 'ECE 209P', 'ECE 309S', 'ECE 411', 'ECE 111S', 'ECE 312', 'ECE 312H', 'ECE 313',
@@ -31,9 +32,11 @@ def get_class_list(update=False) -> list:
                 'ECE 397S', 'ECE 698', 'ECE 398R', 'ECE 398T', 'ECE 399W', 'ECE 499W', 'ECE 599W', 'ECE 699W',
                 'ECE 799W', 'ECE 899W', 'ECE 999W']
 
+    print("sending requests!")
     r = requests.get("https://catalog.utexas.edu/general-information/coursesatoz/ece/")
     r2 = requests.get("https://catalog.utexas.edu/general-information/coursesatoz/m/")
     s = BeautifulSoup(r.text, features="html.parser")
+    print("done!")
 
     ret = []
     for x in s.findAll("h5"):
