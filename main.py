@@ -40,7 +40,7 @@ async def school_autocomplete(interaction: discord.Interaction, current: str) ->
 # Add the guild ids in which the slash command will appear. If it should be in all, remove the argument,
 # but note that it will take some time (up to an hour) to register the command if it's for all guilds.
 async def add_class(interaction: discord.Interaction, school: str, class_id: str):
-    class_full_name = school + " " + class_id
+    class_full_name = (school + " " + class_id).upper()
     print(class_full_name)
     user = interaction.user
     print(check_valid(class_full_name))
@@ -74,7 +74,7 @@ async def add_class(interaction: discord.Interaction, school: str, class_id: str
 @tree.command(name="removeclass", description="Remove a class from your roles")
 @app_commands.autocomplete(school=school_autocomplete)
 async def remove_class(interaction: discord.Interaction, school: str, class_id: str):
-    class_full_name = school + " " + class_id
+    class_full_name = (school + " " + class_id).upper()
 
     if not check_valid(class_full_name):
         await interaction.response.send_message("Please enter a valid class", ephemeral=True)
