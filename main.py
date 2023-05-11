@@ -16,14 +16,29 @@ tree = app_commands.CommandTree(client)
 
 classlist = scraper.get_class_list(update=True)
 
+guildIDs = []
 
 @client.event
 async def on_ready():
     print(classlist)
     print(f'Logged on as {client.user}!')
-    await tree.sync(guild=discord.Object(env_vars["GUILD_ID"]))
-    print("Ready!")
+    guildC = 0
+    # Automatically check all joined guilds
+    for guild in client.guilds:
+        guildIDs.append(guild.id)
+        print(f"joined to guild: {guild.id} (name: {guild.name})")
+        guildC += 1
+    
+    i = 0;
+    while (client.is_ws_ratelimited()):
+        if (i % 50 == 0 or i == 0):
+            print("rate limited D:")
+            i += 1
 
+    # Global sync for now
+    # Guild specific sync broke everything >>.<< 
+    await tree.sync()
+    print("Ready!")
 
 async def school_autocomplete(interaction: discord.Interaction, current: str) -> List[app_commands.Choice[str]]:
     schools = ['ECE', 'M']
@@ -35,13 +50,13 @@ async def school_autocomplete(interaction: discord.Interaction, current: str) ->
 
 # https://stackoverflow.com/questions/71165431/how-do-i-make-a-working-slash-command-in-discord-py
 # noinspection PyUnresolvedReferences
-@tree.command(name="addclass", description="Add a class to your roles", guild=discord.Object(env_vars["GUILD_ID"]))
+@tree.command(name="addclass", description="Add a class to your roles", guilds=guildIDs)
 @app_commands.autocomplete(school=school_autocomplete)
 # Add the guild ids in which the slash command will appear. If it should be in all, remove the argument,
 # but note that it will take some time (up to an hour) to register the command if it's for all guilds.
 async def add_class(interaction: discord.Interaction, school: str, class_id: str):
     class_full_name = school + " " + class_id
-    class_full_name.upper()
+    class_full_name.upper() # Jank, but makes it case insensitive
     print(class_full_name)
     user = interaction.user
     print(check_valid(class_full_name))
@@ -73,7 +88,7 @@ async def add_class(interaction: discord.Interaction, school: str, class_id: str
 
 # noinspection PyUnresolvedReferences
 @tree.command(name="removeclass", description="Remove a class from your roles",
-              guild=discord.Object(env_vars["GUILD_ID"]))
+              guilds=guildIDs)
 @app_commands.autocomplete(school=school_autocomplete)
 async def remove_class(interaction: discord.Interaction, school: str, class_id: str):
     class_full_name = school + " " + class_id
