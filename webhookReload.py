@@ -14,7 +14,7 @@ pHandle: Popen = hReload.startBot()
 
 @app.route("/update", methods=["POST"])
 def update():
-    # print(request.json)
+    print(request.json)
     try:
         if request.json["ref"] == ("refs/heads/" + branch):
             print("good update")
