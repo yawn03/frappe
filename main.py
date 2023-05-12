@@ -112,21 +112,35 @@ async def bonk(interaction: discord.Interaction, user: discord.Member):
     
     e.set_image(url=randBonk())
     await interaction.response.send_message(embed=e)
-
+"""
+@tree.command(name="test")
+async def test(interaction: discord.Interaction):
+    await interaction.response.send_message(f'Sorry, rate limited. Here\'s a cool video to pass the time!!\nhttps://www.youtube.com/watch?v={random.choice(["h73EYcyszf8", "itdpuGHAcpg", "22-Ji8_kDwg", "zsJpUCWfyPE", "21X5lGlDOfg"])}')
+"""
 
 @tree.command(name="apod", description="Display NASA's Astronomy Picture Of The Day!!")
 async def apod(interaction: discord.Interaction):
-    r = requests.get('https://api.nasa.gov/planetary/apod?count=1&api_key=DEMO_KEY')
+    r = requests.get(f'https://api.nasa.gov/planetary/apod?count=1&api_key={env_vars["APOD_KEY"]}')
+    print(r.status_code)
+
+    if (r.status_code == 429):
+        await interaction.response.send_message(f'Sorry, rate limited. Here\'s a cool video to pass the time!!\nhttps://www.youtube.com/watch?v={random.choice(["h73EYcyszf8", "itdpuGHAcpg", "22-Ji8_kDwg", "zsJpUCWfyPE", "21X5lGlDOfg"])}')
+        return
+
     try:
         a = r.json()[0]["copyright"]
     except:
         a = "public domain"
 
-    e = discord.Embed(description=r.json()[0]["explanation"], title=(f'APOD {r.json()[0]["date"]} - {r.json()[0]["title"]}'))
+
+    e = discord.Embed(description=(r.json()[0]["explanation"]), title=(f"APOD {r.json()[0]['date']} - {r.json()[0]['title']}"))
     e.set_author(name=a)
     
-
-    e.set_image(url=str(r.json()[0]["url"]))
+    if (r.json()[0]["media_type"] == "image"):
+        e.set_image(url=str(r.json()[0]["url"]))
+    else:
+        e.url = str(r.json()[0]["url"])
+    
     await interaction.response.send_message(embed=e)
 
 @tree.command(name="donk", description="...bonk!")
