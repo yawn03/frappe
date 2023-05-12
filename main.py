@@ -120,7 +120,13 @@ async def test(interaction: discord.Interaction):
 
 @tree.command(name="apod", description="Display NASA's Astronomy Picture Of The Day!!")
 async def apod(interaction: discord.Interaction):
-    r = requests.get(f'https://api.nasa.gov/planetary/apod?count=1&api_key={env_vars["APOD_KEY"]}')
+    try:
+        key = env_vars["APOD_KEY"]
+        print("ADD a NASA API KEY to .env!!")
+    except:
+        key = "DEMO_KEY"
+
+    r = requests.get(f'https://api.nasa.gov/planetary/apod?count=1&api_key={key}')
     print(r.status_code)
 
     if (r.status_code == 429):
