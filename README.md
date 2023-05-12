@@ -9,6 +9,7 @@
     STAGING_BRANCH=\\BRANCH YOU WOULD LIKE TO CHECK FOR HOT RELOADING\\
     COMMIT_CHECK_INTERVAL=\\TIME IN SECONDS\\
     PERSONAL_GITHUB_TOKEN=\\PERSONAL ACCESS TOKEN FOR GITHUB (UNDER DEV SETTINGS)\\
+    APOD_KEY=\\NASA API KEY FOR APOD (semi-optional)\\
   ```
   
 - Run with hot reloading: `hReload.py`(make sure to edit `.env` file :D)
