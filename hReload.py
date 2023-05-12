@@ -45,10 +45,10 @@ token = env_vars["PERSONAL_GITHUB_TOKEN"]
 shaPr = get_commit_hash(user, repo, branch, token)
 
 # pull latest commit
-subprocess.call(["git", "remote", "add", "origin", f"git@github.com:{user}/{repo}"])
-subprocess.call(["git", "fetch", "origin"])
-subprocess.call(["git", "switch", branch])
-subprocess.call(["git", "reset", "--hard"])
+subprocess.call(["git", "remote", "add", "origin", f"git@github.com:{user}/{repo}"], stdout=subprocess.PIPE)
+subprocess.call(["git", "fetch", "origin"], stdout=subprocess.PIPE)
+subprocess.call(["git", "switch", branch], stdout=subprocess.PIPE)
+subprocess.call(["git", "reset", "--hard"], stdout=subprocess.PIPE)
 
 # Start the bot
 pHandle = startBot()
@@ -68,7 +68,7 @@ def check_for_new_commit(scheduler, pHandle, shaPr):
 
         ## Fetch the commit
 
-        subprocess.call(["git", "pull"])
+        subprocess.call(["git", "pull"], stdout=subprocess.PIPE)
 
         pHandle = startBot()
         shaPr = sha
