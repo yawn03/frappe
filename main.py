@@ -4,6 +4,7 @@ import discord
 from discord import app_commands
 from dotenv import dotenv_values
 import random
+import requests
 
 import scraper
 
@@ -49,7 +50,7 @@ async def add_class(interaction: discord.Interaction, school: str, class_id: str
     # make a case-insensitive concat of the department and course number
     class_full_name = (school + " " + class_id).upper()
 
-    user = interaction.user
+    USER = interaction.user
 
     # Check for validity of the course, if not then quit
     if not check_valid(class_full_name):
@@ -112,6 +113,21 @@ async def bonk(interaction: discord.Interaction, user: discord.Member):
     e.set_image(url=randBonk())
     await interaction.response.send_message(embed=e)
 
+
+@tree.command(name="apod", description="Display NASA's Astronomy Picture Of The Day!!")
+async def apod(interaction: discord.Interaction):
+    r = requests.get('https://api.nasa.gov/planetary/apod?count=1&api_key=DEMO_KEY')
+    try:
+        a = r.json()[0]["copyright"]
+    except:
+        a = "public domain"
+
+    e = discord.Embed(description=r.json()[0]["explanation"], title=(f'APOD {r.json()[0]["date"]} - {r.json()[0]["title"]}'))
+    e.set_author(name=a)
+    
+
+    e.set_image(url=str(r.json()[0]["url"]))
+    await interaction.response.send_message(embed=e)
 
 @tree.command(name="donk", description="...bonk!")
 async def donk(interaction: discord.Interaction):
