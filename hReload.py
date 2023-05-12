@@ -79,16 +79,7 @@ def check_for_new_commit(scheduler, pHandle, shaPr):
     scheduler.enter(float(env_vars["COMMIT_CHECK_INTERVAL"]), 1, check_for_new_commit, (scheduler, pHandle, shaPr,))
 
 
-def reset_bot(pHandle) -> subprocess.Popen:
-    print(f"new commit on {branch}")
-    pHandle.send_signal(signal.SIGTERM)
-    pHandle.wait()
 
-    ## Fetch the commit
-
-    subprocess.call(["git", "pull"], stdout=subprocess.PIPE)
-
-    return startBot()
 
 
 # Setup scheduler and schedule the commit check
