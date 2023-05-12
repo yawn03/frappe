@@ -160,6 +160,39 @@ async def say(interaction: discord.Interaction, msg: str):
 async def github(interaction: discord.Interaction):
     e = discord.Embed(title="Frappe Bot Github:", description="https://github.com/yawn03/frappe")
     await interaction.response.send_message(embed=e)
+
+@tree.command(name="cupid", description="john cena busts it down")
+async def cupid(interaction: discord.Interaction):
+    await interaction.response.send_message("https://files.catbox.moe/76anah.mp4")
+
+fakeDB = {}
+@tree.command(name="ece-moment", 
+              description="What's the liklihood that you won't die alone")
+async def ece_moment(interaction: discord.Interaction):
+    user_id = str(interaction.user.id)
+    
+    if (user_id not in fakeDB):
+        # get weighted chance of lonliness
+        b = random.randint(-25, 100)
+        b = 0 if b < 0 else b
+        
+        # apply to user 
+        fakeDB[user_id] = b
+    else:
+        b = fakeDB[user_id]
+
+    m = f"There's a {b}% chance you will defeat the ECE major stereotype"
+    e = discord.Embed(description=m)
+    
+    if (b == 0):
+        e.title="Quite unfortunate"
+    else:
+        e.title='"There\'s hope 🙏" -your grandma'
+    
+    await interaction.response.send_message(embed=e)
+    if (b == 0):
+        await interaction.followup.send("Here's some music to comfort you in these trying times\n\nhttps://files.catbox.moe/76anah.mp4")
+
 @tree.command(name="donk", description="...bonk!")
 async def donk(interaction: discord.Interaction):
     await interaction.response.send_message("donk!")
