@@ -15,15 +15,10 @@ pHandle: Popen = hReload.startBot()
 @app.route("/update", methods=["POST"])
 def update():
     print(request.json)
-    try:
-        if request.json["ref"] == ("refs/heads/" + branch):
-            print("good update")
-            global pHandle
-            pHandle = hReload.reset_bot(pHandle)
-            return "received!"
-    except:
-        print("not a push or not correct branch")
-        return "received!"
+    if request.json["ref"] == ("refs/heads/" + branch):
+        print("good update")
+        global pHandle
+        pHandle = hReload.reset_bot(pHandle)
 
     return "received!"
 
