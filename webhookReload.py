@@ -19,10 +19,10 @@ def start_bot() -> subprocess.Popen:
     return subprocess.Popen(args=["python", "main.py"], executable=sys.executable)
 
 
-def reset_bot(pHandle) -> subprocess.Popen:
+def reset_bot(process) -> subprocess.Popen:
     print(f"new commit on {branch}")
-    pHandle.send_signal(signal.SIGTERM)
-    pHandle.wait()
+    process.send_signal(signal.SIGTERM)
+    process.wait()
 
     # Fetch the commit
     subprocess.call(["git", "pull"], stdout=subprocess.PIPE)
@@ -44,7 +44,7 @@ def update():
         global pHandle
         pHandle = reset_bot(pHandle)
 
-    # return something so github doesn't give us an error
+    # return something so GitHub doesn't give us an error
     return "received!"
 
 
@@ -61,4 +61,3 @@ if __name__ == '__main__':
 
     print("setup complete!")
     app.run(host="0.0.0.0", port=5555, debug=False)
-
