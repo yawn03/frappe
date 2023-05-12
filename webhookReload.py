@@ -37,10 +37,8 @@ app = Flask(__name__)
 # endpoint called on any push to repo
 @app.route("/update", methods=["POST"])
 def update():
-    print(request.json)
     # check if the push was to the branch the hot reloader tracks
     if request.json["ref"] == ("refs/heads/" + branch):
-        print("good update")
         global pHandle
         pHandle = reset_bot(pHandle)
 
@@ -59,5 +57,4 @@ if __name__ == '__main__':
     update_local_repo()
     pHandle = start_bot()
 
-    print("setup complete!")
     app.run(host="0.0.0.0", port=5555, debug=False)
