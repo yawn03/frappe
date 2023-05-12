@@ -59,5 +59,6 @@ if __name__ == '__main__':
     update_local_repo()
     pHandle = start_bot()
 
-    app.run(host="0.0.0.0", port=5555, debug=False)
     print("setup complete!")
+    app.run(host="0.0.0.0", port=5555, debug=False)
+
