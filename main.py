@@ -104,14 +104,17 @@ async def remove_class(interaction: discord.Interaction, school: str, class_id: 
     await interaction.response.send_message("Failed ;_;.", ephemeral=True)
 
 def randBonk():
-    return ['https://media.tenor.com/zdcbh9URQCsAAAAd/bonk-doge.gif', 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYWQ0Nzk1NDFkYTBmNTZiODdlNmQ4YmZjNmQxODhhYTFkNTIxNTQ2NyZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/6d7YORJ4gNKJZ6eE4o/giphy-downsized-large.gif', 'https://media.tenor.com/Tg9jEwKCZVoAAAAd/bonk-mega-bonk.gif'][0 if random.randint(1, 100) > 25 else random.randint(1, 2)] 
+    return ['https://media.tenor.com/zdcbh9URQCsAAAAd/bonk-doge.gif',
+            'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYWQ0Nzk1NDFkYTBmNTZiODdlNmQ4YmZjNmQxODhhYTFkNTIxNTQ2NyZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/6d7YORJ4gNKJZ6eE4o/giphy-downsized-large.gif',
+            'https://media.tenor.com/Tg9jEwKCZVoAAAAd/bonk-mega-bonk.gif'][0 if random.randint(1, 100) > 25 else random.randint(1, 2)]
 
 @tree.command(name="bonk", description="...bonk!")
 async def bonk(interaction: discord.Interaction, user: discord.Member):
-    e = discord.Embed(description=(interaction.user.mention + " bonked " + user.mention))
-    
+    e = discord.Embed()
     e.set_image(url=randBonk())
-    await interaction.response.send_message(embed=e)
+    await interaction.response.send_message(interaction.user.mention + " bonked " + user.mention, embed=e)
+
+    
 """
 @tree.command(name="test")
 async def test(interaction: discord.Interaction):
