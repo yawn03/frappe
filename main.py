@@ -156,6 +156,10 @@ async def apod(interaction: discord.Interaction):
 async def say(interaction: discord.Interaction, msg: str):
     await interaction.response.send_message(f"{interaction.user.mention} asked me to say: {msg}")
 
+@tree.command(name="github", description="gets github link")
+async def github(interaction: discord.Interaction):
+    e = discord.Embed(title="Frappe Bot Github:", description="https://github.com/yawn03/frappe")
+    await interaction.response.send_message(embed=e)
 @tree.command(name="donk", description="...bonk!")
 async def donk(interaction: discord.Interaction):
     await interaction.response.send_message("donk!")
