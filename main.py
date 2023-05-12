@@ -103,7 +103,7 @@ async def remove_class(interaction: discord.Interaction, school: str, class_id: 
     await interaction.response.send_message("Failed ;_;.", ephemeral=True)
 
 def randBonk():
-    return ['https://media.tenor.com/zdcbh9URQCsAAAAd/bonk-doge.gif', 'https://giphy.com/gifs/bonk-ut25-titanfall34-6d7YORJ4gNKJZ6eE4o', 'https://tenor.com/view/bonk-mega-bonk-bonk-dog-bonkers-bonk-anime-gif-24565990'][0 if random.randint(1, 100) > 25 else random.randint(1, 2)] 
+    return ['https://media.tenor.com/zdcbh9URQCsAAAAd/bonk-doge.gif', 'https://giphy.com/gifs/bonk-ut25-titanfall34-6d7YORJ4gNKJZ6eE4o.gif', 'https://tenor.com/view/bonk-mega-bonk-bonk-dog-bonkers-bonk-anime-gif-24565990.gif'][0 if random.randint(1, 100) > 25 else random.randint(1, 2)] 
 
 @tree.command(name="bonk", description="...bonk!")
 async def bonk(interaction: discord.Interaction, user: discord.Member):
