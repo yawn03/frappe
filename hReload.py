@@ -8,6 +8,12 @@ from dotenv import dotenv_values
 import sys
 import sched
 
+env_vars = dotenv_values(".env")
+
+user = env_vars["STAGING_USER"]
+repo = env_vars["STAGING_REPO"]
+branch = env_vars["STAGING_BRANCH"]
+token = env_vars["PERSONAL_GITHUB_TOKEN"]
 
 # Uses the GitHub API to extract the hash of the latest commit on a specific branch
 # Requires STAGING_USER, STAGING_REPO, and STAGING_BRANCH
@@ -84,13 +90,6 @@ def reset_bot(pHandle) -> subprocess.Popen:
     # Check github every 60 seconds
 
 if __name__ == "main":
-    env_vars = dotenv_values(".env")
-
-    user = env_vars["STAGING_USER"]
-    repo = env_vars["STAGING_REPO"]
-    branch = env_vars["STAGING_BRANCH"]
-    token = env_vars["PERSONAL_GITHUB_TOKEN"]
-
     # Current latest commit
     shaPr = get_commit_hash(user, repo, branch, token)
 
