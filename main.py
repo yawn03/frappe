@@ -3,6 +3,7 @@ from typing import List
 import discord
 from discord import app_commands
 from dotenv import dotenv_values
+import random
 
 import scraper
 
@@ -101,18 +102,20 @@ async def remove_class(interaction: discord.Interaction, school: str, class_id: 
 
     await interaction.response.send_message("Failed ;_;.", ephemeral=True)
 
+def randBonk():
+    return ['https://media.tenor.com/zdcbh9URQCsAAAAd/bonk-doge.gif', 'https://giphy.com/gifs/bonk-ut25-titanfall34-6d7YORJ4gNKJZ6eE4o', 'https://tenor.com/view/bonk-mega-bonk-bonk-dog-bonkers-bonk-anime-gif-24565990'][0 if random.randint(1, 100) > 25 else random.randint(1, 2)] 
 
 @tree.command(name="bonk", description="...bonk!")
 async def bonk(interaction: discord.Interaction, user: discord.Member):
     e = discord.Embed(description=(interaction.user.mention + " bonked " + user.mention))
-    e.set_image(url="https://media.tenor.com/zdcbh9URQCsAAAAd/bonk-doge.gif")
+    
+    e.set_image(url=randBonk())
     await interaction.response.send_message(embed=e)
 
 
 @tree.command(name="donk", description="...bonk!")
 async def donk(interaction: discord.Interaction):
     await interaction.response.send_message("donk!")
-
 
 def check_valid(id: str):
     return id in classlist
