@@ -1,5 +1,3 @@
-from subprocess import Popen
-
 from dotenv import dotenv_values
 from flask import Flask, request
 
@@ -8,8 +6,10 @@ import hReload
 app = Flask(__name__)
 
 env_vars = dotenv_values(".env")
+user = env_vars["STAGING_USER"]
+repo = env_vars["STAGING_REPO"]
 branch = env_vars["STAGING_BRANCH"]
-pHandle: Popen = hReload.startBot()
+token = env_vars["PERSONAL_GITHUB_TOKEN"]
 
 
 @app.route("/update", methods=["POST"])
@@ -23,7 +23,5 @@ def update():
     return "received!"
 
 
-
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5555, debug=True)
-
