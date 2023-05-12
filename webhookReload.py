@@ -38,7 +38,6 @@ app = Flask(__name__)
 @app.route("/update", methods=["POST"])
 def update():
     print(request.json)
-
     # check if the push was to the branch the hot reloader tracks
     if request.json["ref"] == ("refs/heads/" + branch):
         print("good update")
@@ -61,3 +60,4 @@ if __name__ == '__main__':
     pHandle = start_bot()
 
     app.run(host="0.0.0.0", port=5555, debug=False)
+    print("setup complete!")
