@@ -23,7 +23,7 @@ classlist: list = scraper.get_class_list(update=True)
 
 @client.event
 async def on_ready():
-    print(classlist)
+    # print(classlist)
     print(f'Logged on as {client.user}!')
 
     # sync our commands globally
