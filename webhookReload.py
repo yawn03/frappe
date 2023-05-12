@@ -20,6 +20,7 @@ def update():
             print("good update")
             global pHandle
             pHandle = hReload.reset_bot(pHandle)
+            return "received!"
     except:
         print("not a push or not correct branch")
         return "received!"
