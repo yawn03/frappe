@@ -163,7 +163,7 @@ async def github(interaction: discord.Interaction):
 
 @tree.command(name="cupid", description="john cena busts it down")
 async def cupid(interaction: discord.Interaction):
-    await interaction.response.send_message("https://files.catbox.moe/76anah.mp4")
+    await interaction.response.send_message("https://www.rubylith.xyz/media/cupid.mp4")
 
 fakeDB = {}
 @tree.command(name="ece-moment", 
