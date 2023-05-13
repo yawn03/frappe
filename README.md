@@ -13,4 +13,5 @@
   ```
   
 - Run with hot reloading: `hReload.py`(make sure to edit `.env` file :D)
+- Run with webhook hot reloading: `webhookReload.py`
 - Run normally: `main.py`
