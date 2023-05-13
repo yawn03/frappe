@@ -28,6 +28,7 @@ def get_commit_hash(user, repo, br, token):
         print(response.text)
         return None
 
+
 # Opens a new process with thr same python interpreter for the discord bot
 def startBot():
     pHandle = subprocess.Popen(args=["python", "main.py"], executable=sys.executable)
@@ -52,6 +53,7 @@ subprocess.call(["git", "reset", "--hard"], stdout=subprocess.PIPE)
 
 # Start the bot
 pHandle = startBot()
+
 
 # Runs every COMMIT_CHECK_INTERVAL seconds and checks if a new commit has been pushed to the STAGING_BRANCH
 # If so, it kills the bot process and restarts it
@@ -79,19 +81,20 @@ def check_for_new_commit(scheduler, pHandle, shaPr):
 
 
 
+
 # Setup scheduler and schedule the commit check
 my_scheduler = sched.scheduler(time.time, time.sleep)
 my_scheduler.enter(float(env_vars["COMMIT_CHECK_INTERVAL"]), 1, check_for_new_commit, (my_scheduler, pHandle, shaPr))
 my_scheduler.run()
 
-#while (True):
-    # this code does not work and i am not sure why rn
-    # could be useful later
-    # bot is frozen
+# while (True):
+# this code does not work and i am not sure why rn
+# could be useful later
+# bot is frozen
 #    if (pHandle.poll() is not None):
 #        print("bot dripped too hard, melting")
 #        pHandle.send_signal(signal.SIGTERM)
 #        pHandle.wait()
 #        pHandle = startBot()
-    
-    # Check github every 60 seconds
+
+# Check github every 60 seconds
